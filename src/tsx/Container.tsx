@@ -36,10 +36,15 @@ function ContainerComponent() {
         <>
             <Container>
                 <EntryNamesComponent 
+                    canvasWidth={canvasWidth} 
+                    canvasHeight={canvasHeight}
+                    intervalWidth={intervalWidth}
+                    intervalHeight={intervalHeight}
                     entryNames={entryNames}
                     lengthEntryNames={lengthEntryNames}
                     canvasContext={canvasContext}
                     setCanvasContext={setCanvasContext}
+                    numberOfTree={numberOfTree}
                 />
                 <CanvasComponent 
                     canvasWidth={canvasWidth} 

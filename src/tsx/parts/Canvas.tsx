@@ -4,6 +4,7 @@ import styled from 'styled-components'
 const Canvas = styled.canvas`
 
 `
+
 type Props = {
     canvasWidth: number,
     canvasHeight: number,
@@ -40,7 +41,6 @@ function CanvasComponent(props: Props) {
     
     useEffect(() => {
         const ctx: CanvasRenderingContext2D = getCanvasContext();
-        props.setCanvasContext(ctx);
         ctx.clearRect(0, 0, props.canvasWidth, props.canvasHeight);
         ctx.strokeStyle = '#261103';
 
@@ -88,6 +88,7 @@ function CanvasComponent(props: Props) {
                 }
             }
         }
+        props.setCanvasContext(ctx);
     });
 
     return (
