@@ -2,11 +2,21 @@ import {useEffect, useRef} from 'react'
 import styled from 'styled-components'
 
 const Canvas = styled.canvas`
-    margin: 30px;
-`
 
-function CanvasComponent(props) {
-    const treeHeight: number = 15;
+`
+type Props = {
+    canvasWidth: number,
+    canvasHeight: number,
+    intervalWidth: number,
+    intervalHeight: number,
+    canvasContext: any,
+    setCanvasContext: Function,
+    numberOfTree: number,
+    canvasRef: any,
+    lengthEntryNames: number
+}
+
+function CanvasComponent(props: Props) {
     /**
      * 
      * @returns 
@@ -19,6 +29,14 @@ function CanvasComponent(props) {
     const getRandomNumberForBranching = (): number => {
         return Math.floor(Math.random() * 2);
     }
+
+    const getThisPoint = (point: number): number => {
+        return point + 1;
+    }
+
+    const getNextPoint = (point: number): number => {
+        return point + 2;
+    }
     
     useEffect(() => {
         const ctx: CanvasRenderingContext2D = getCanvasContext();
@@ -30,40 +48,48 @@ function CanvasComponent(props) {
         const amidaPath: amidaPathType = [0, []];
         let branchingPoint: number = 0;
 
-        for (let vertical: number = 0; vertical < treeHeight; vertical++) {
-            amidaPath[vertical] = [branchingPoint];
-
-            for (let horizontal: number = 0; horizontal < props.lengthEntryNames; horizontal++){
-                const isLastCol = horizontal === props.lengthEntryNames - 1;
-                const isLastRow = vertical === treeHeight - 1;
+        for (let y: number = 0; y < props.numberOfTree; y++) {
+            amidaPath[y] = [branchingPoint];
+            for (let x: number = 0; x < props.lengthEntryNames; x++){
+                const isLastCol = x === props.lengthEntryNames - 1;
+                const isLastRow = y === props.numberOfTree - 1;
                 const isNotBranching = getRandomNumberForBranching() === 0;
-                if (isLastCol || isNotBranching || isLastRow){
-                    amidaPath[vertical][branchingPoint] = [0, 0];
+                if (isLastCol || isLastRow || isNotBranching){
+                    // 枝分かれ
+                    amidaPath[y][branchingPoint] = [0, 0];
                     branchingPoint++;
 
                     ctx.beginPath();
-                    ctx.moveTo(props.intervalWidth * (horizontal + 1), props.intervalHeight * (vertical + 1));
-                    ctx.lineTo(props.intervalWidth * (horizontal + 1), props.intervalHeight * (vertical + 2));
+                    // 座標を取得
+                    ctx.moveTo(props.intervalWidth * getThisPoint(x), props.intervalHeight * getThisPoint(y));
+                    // 縦線を引く
+                    ctx.lineTo(props.intervalWidth * getThisPoint(x), props.intervalHeight * getNextPoint(y));
                     ctx.stroke();
                 } else {
+                    //隣の座標の分もセット
                     for (let t: number = 0; t < 2; t++) {
-                        amidaPath[vertical][branchingPoint] = [horizontal + 1, horizontal + 2];
+                        amidaPath[y][branchingPoint] = [getThisPoint(x), getNextPoint(x)];
                         branchingPoint ++;
                     }
                     ctx.beginPath();
-                    ctx.moveTo(props.intervalWidth * (horizontal + 1), props.intervalHeight * (vertical + 1));
-                    ctx.lineTo(props.intervalWidth * (horizontal + 1), props.intervalHeight * (vertical + 2));
-                    ctx.lineTo(props.intervalWidth * (horizontal + 2), props.intervalHeight * (vertical + 2));
-                    ctx.moveTo(props.intervalWidth * (horizontal + 2), props.intervalHeight * (vertical + 1));
-                    ctx.lineTo(props.intervalWidth * (horizontal + 2), props.intervalHeight * (vertical + 2));
+                    // 座標を取得
+                    ctx.moveTo(props.intervalWidth * getThisPoint(x), props.intervalHeight * getThisPoint(y));
+                    // 縦線を引く
+                    ctx.lineTo(props.intervalWidth * getThisPoint(x), props.intervalHeight * getNextPoint(y));
+                    // 横線を引く
+                    ctx.lineTo(props.intervalWidth * getNextPoint(x), props.intervalHeight * getNextPoint(y));
+                    // 隣のx座標を取得
+                    ctx.moveTo(props.intervalWidth * getNextPoint(x), props.intervalHeight * getThisPoint(y));
+                    // 隣のx縦線を引く
+                    ctx.lineTo(props.intervalWidth * getNextPoint(x), props.intervalHeight * getNextPoint(y));
                     ctx.stroke();
-                    horizontal++;
+                    // 隣のx座標の縦線は書いたのでスキップ
+                    x++;
                 }
             }
         }
     });
 
-    
     return (
         <Canvas ref={props.canvasRef} width={props.canvasWidth} height={props.canvasHeight}>
             canvas not supported...
