@@ -4,7 +4,7 @@ import styled from 'styled-components'
 const Canvas = styled.canvas`
 
 `
-
+type amidaPathType = [number, any];
 type Props = {
     canvasWidth: number,
     canvasHeight: number,
@@ -14,7 +14,9 @@ type Props = {
     setCanvasContext: Function,
     numberOfTree: number,
     canvasRef: any,
-    lengthEntryNames: number
+    lengthEntryNames: number,
+    amidaPath: amidaPathType,
+    setAmidaPath: Function,
 }
 
 function CanvasComponent(props: Props) {
@@ -44,19 +46,17 @@ function CanvasComponent(props: Props) {
         ctx.clearRect(0, 0, props.canvasWidth, props.canvasHeight);
         ctx.strokeStyle = '#261103';
 
-        type amidaPathType = [number, any]
-        const amidaPath: amidaPathType = [0, []];
         let branchingPoint: number = 0;
 
         for (let y: number = 0; y < props.numberOfTree; y++) {
-            amidaPath[y] = [branchingPoint];
+            props.amidaPath[y] = [branchingPoint];
             for (let x: number = 0; x < props.lengthEntryNames; x++){
                 const isLastCol = x === props.lengthEntryNames - 1;
                 const isLastRow = y === props.numberOfTree - 1;
                 const isNotBranching = getRandomNumberForBranching() === 0;
                 if (isLastCol || isLastRow || isNotBranching){
                     // 枝分かれ
-                    amidaPath[y][branchingPoint] = [0, 0];
+                    props.amidaPath[y][branchingPoint] = [0, 0];
                     branchingPoint++;
 
                     ctx.beginPath();
@@ -68,7 +68,7 @@ function CanvasComponent(props: Props) {
                 } else {
                     //隣の座標の分もセット
                     for (let t: number = 0; t < 2; t++) {
-                        amidaPath[y][branchingPoint] = [getThisPoint(x), getNextPoint(x)];
+                        props.amidaPath[y][branchingPoint] = [getThisPoint(x), getNextPoint(x)];
                         branchingPoint ++;
                     }
                     ctx.beginPath();
@@ -89,6 +89,7 @@ function CanvasComponent(props: Props) {
             }
         }
         props.setCanvasContext(ctx);
+        props.setAmidaPath(props.amidaPath);
     });
 
     return (

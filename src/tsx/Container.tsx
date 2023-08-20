@@ -9,7 +9,7 @@ const Container = styled.div`
 
 function ContainerComponent() {
     const canvasRef: any = useRef(null);
-    const [canvasContext, setCanvasContext]: any = useState(null);
+    const [canvasContext, setCanvasContext] = useState<any>(null);
     const numberOfTree: number = 15;
     const entryNames: Array<String> = ['a', 'b', 'c', 'd'];
     const lengthEntryNames: number = entryNames.length;
@@ -19,6 +19,9 @@ function ContainerComponent() {
     let canvasHeight: number = 0;
     canvasHeight = (numberOfTree *  intervalHeight) + 40;
     canvasWidth = (lengthEntryNames * intervalWidth) + intervalWidth;
+
+    type amidaPathType = [number, any];
+    const [amidaPath, setAmidaPath] = useState<amidaPathType>([0, []]);
     
     const getCanvasContext = (): CanvasRenderingContext2D => {
         const canvas: any = canvasRef.current;
@@ -45,6 +48,8 @@ function ContainerComponent() {
                     canvasContext={canvasContext}
                     setCanvasContext={setCanvasContext}
                     numberOfTree={numberOfTree}
+                    amidaPath={amidaPath}
+                    setAmidaPath={setAmidaPath}
                 />
                 <CanvasComponent 
                     canvasWidth={canvasWidth} 
@@ -56,6 +61,8 @@ function ContainerComponent() {
                     setCanvasContext={setCanvasContext} 
                     canvasRef={canvasRef}
                     lengthEntryNames={lengthEntryNames}
+                    amidaPath={amidaPath}
+                    setAmidaPath={setAmidaPath}
                 />
             </Container>
         </>
