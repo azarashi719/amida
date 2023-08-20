@@ -4,7 +4,6 @@ import styled from 'styled-components'
 const Canvas = styled.canvas`
 
 `
-type amidaPathType = [number, any];
 type Props = {
     canvasWidth: number,
     canvasHeight: number,
@@ -15,7 +14,7 @@ type Props = {
     numberOfTree: number,
     canvasRef: any,
     lengthEntryNames: number,
-    amidaPath: amidaPathType,
+    amidaPath: [number, any],
     setAmidaPath: Function,
 }
 
@@ -49,6 +48,7 @@ function CanvasComponent(props: Props) {
         let branchingPoint: number = 0;
 
         for (let y: number = 0; y < props.numberOfTree; y++) {
+            branchingPoint = 0;
             props.amidaPath[y] = [branchingPoint];
             for (let x: number = 0; x < props.lengthEntryNames; x++){
                 const isLastCol = x === props.lengthEntryNames - 1;
@@ -69,7 +69,7 @@ function CanvasComponent(props: Props) {
                     //隣の座標の分もセット
                     for (let t: number = 0; t < 2; t++) {
                         props.amidaPath[y][branchingPoint] = [getThisPoint(x), getNextPoint(x)];
-                        branchingPoint ++;
+                        branchingPoint++;
                     }
                     ctx.beginPath();
                     // 座標を取得

@@ -34,6 +34,8 @@ type Props = {
     canvasContext: any,
     setCanvasContext: Function,
     numberOfTree: number,
+    amidaPath: [number, any],
+    setAmidaPath: Function,
 }
 
 function EntryNamesComponent(props: Props){
@@ -49,24 +51,56 @@ function EntryNamesComponent(props: Props){
         return point + 2;
     }
 
+    const getPrevPoint = (point: number): number => {
+        return point;
+    }
+
+    const shouldMoveToNext = (x: number, y: number): Boolean => {
+        return props.amidaPath[y][x][0] === getThisPoint(x);
+    }
+
+    const shouldMoveToPrev = (x: number, y: number): Boolean => {
+        return props.amidaPath[y][x][1] === getThisPoint(x);
+    }
+
     const goToResult = (index: number) => {
         ctx = props.canvasContext;
-        console.log(ctx);
         if (firstAccess) {
+            // 辿った線のないあみだを保存
             baseAmida = ctx.getImageData(0, 0, props.canvasWidth, props.canvasHeight);
             firstAccess = false;
+        } else {
+            // 辿った線を消去
+            ctx.putImageData(baseAmida, 0, 0);
         }
-        ctx.putImageData(baseAmida, 0, 0);
-        for (let x: number = 0; x < props.lengthEntryNames; x++){
-            let pointX = x;
-            for(let y: number = 0; y < props.numberOfTree; y++) {
+        
+        ctx.strokeStyle = "#00b0ec";
+        ctx.lineWidth = 3;
+
+        let x = index;
+        for (let y: number = 0; y < props.numberOfTree; y++) {
+            ctx.moveTo(props.intervalWidth * getThisPoint(x), props.intervalHeight * getThisPoint(y));
+            if (shouldMoveToNext(x, y)) {
+                ctx.beginPath();
                 ctx.moveTo(props.intervalWidth * getThisPoint(x), props.intervalHeight * getThisPoint(y));
-            
+                ctx.lineTo(props.intervalWidth * getThisPoint(x), props.intervalHeight * getNextPoint(y));
+                ctx.lineTo(props.intervalWidth * getNextPoint(x), props.intervalHeight * getNextPoint(y));
+                ctx.stroke();
+                x++;
+            } else if (shouldMoveToPrev(x, y)) {
+                ctx.beginPath();
+                ctx.moveTo(props.intervalWidth * getThisPoint(x), props.intervalHeight * getThisPoint(y));
+                ctx.lineTo(props.intervalWidth * getThisPoint(x), props.intervalHeight * getNextPoint(y));
+                ctx.lineTo(props.intervalWidth * getPrevPoint(x), props.intervalHeight * getNextPoint(y));
+                ctx.stroke();
+                x--;
+            } else {
+                ctx.beginPath();
+                ctx.moveTo(props.intervalWidth * getThisPoint(x), props.intervalHeight * getThisPoint(y));
+                ctx.lineTo(props.intervalWidth * getThisPoint(x), props.intervalHeight * getNextPoint(y));
+                ctx.stroke();
             }
         }
-        console.log(index);
-        
-        console.log(baseAmida);
         props.setCanvasContext(ctx);
     }
 

@@ -20,8 +20,8 @@ function ContainerComponent() {
     canvasHeight = (numberOfTree *  intervalHeight) + 40;
     canvasWidth = (lengthEntryNames * intervalWidth) + intervalWidth;
 
-    type amidaPathType = [number, any];
-    const [amidaPath, setAmidaPath] = useState<amidaPathType>([0, []]);
+    // TODO 配列の型定義調べる
+    const [amidaPath, setAmidaPath] = useState<[number, any]>([0, []]);
     
     const getCanvasContext = (): CanvasRenderingContext2D => {
         const canvas: any = canvasRef.current;
