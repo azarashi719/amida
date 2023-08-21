@@ -18,7 +18,7 @@ type Props = {
     setAmidaPath: Function,
 }
 
-function CanvasComponent(props: Props) {
+function AmidaBaseComponent(props: Props) {
     /**
      * 
      * @returns 
@@ -98,4 +98,4 @@ function CanvasComponent(props: Props) {
         </Canvas>
     )
 }
-export default CanvasComponent
+export default AmidaBaseComponent

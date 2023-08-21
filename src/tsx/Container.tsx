@@ -1,6 +1,6 @@
 import {useEffect, useRef, useState} from 'react'
 import styled from 'styled-components'
-import CanvasComponent from './parts/Canvas'
+import AmidaBaseComponent from './parts/AmidaBase'
 import EntryNamesComponent from './parts/EntryNames'
 
 const Container = styled.div`
@@ -51,7 +51,7 @@ function ContainerComponent() {
                     amidaPath={amidaPath}
                     setAmidaPath={setAmidaPath}
                 />
-                <CanvasComponent 
+                <AmidaBaseComponent 
                     canvasWidth={canvasWidth} 
                     canvasHeight={canvasHeight}
                     intervalWidth={intervalWidth}
