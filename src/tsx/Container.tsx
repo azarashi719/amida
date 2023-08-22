@@ -2,6 +2,7 @@ import {useEffect, useRef, useState} from 'react'
 import styled from 'styled-components'
 import AmidaBaseComponent from './parts/AmidaBase'
 import EntryNamesComponent from './parts/EntryNames'
+import ResultComponent from './parts/Result'
 
 const Container = styled.div`
     margin: 30px;
@@ -63,6 +64,11 @@ function ContainerComponent() {
                     lengthEntryNames={lengthEntryNames}
                     amidaPath={amidaPath}
                     setAmidaPath={setAmidaPath}
+                />
+                <ResultComponent
+                    canvasWidth={canvasWidth}
+                    intervalWidth={intervalWidth}
+                    lengthEntryNames={lengthEntryNames}
                 />
             </Container>
         </>

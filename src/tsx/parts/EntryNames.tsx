@@ -78,6 +78,7 @@ function EntryNamesComponent(props: Props){
         ctx.lineWidth = 3;
 
         let x = index;
+
         for (let y: number = 0; y < props.numberOfTree; y++) {
             ctx.moveTo(props.intervalWidth * getThisPoint(x), props.intervalHeight * getThisPoint(y));
             if (shouldMoveToNext(x, y)) {
