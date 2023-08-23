@@ -1,9 +1,15 @@
 import {useEffect, useRef} from 'react'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 
-const EntryNames = styled.ul`
+type EntryNamesProps = {
+    canvasWidth: number,
+    intervalWidth: number,
+}
+const EntryNames = styled.ul<EntryNamesProps>`
     display: flex;
-    padding: 0 40px;
+    padding: 0 ${props => (props.intervalWidth / 2) + 'px'};
+    width: ${props => props.canvasWidth + 'px'};
+    box-sizing: border-box;
     text-align: center;
     margin: 0 0 -30px;
     position: relative;
@@ -107,7 +113,10 @@ function EntryNamesComponent(props: Props){
 
 
     return (
-        <EntryNames>
+        <EntryNames
+            intervalWidth={props.intervalWidth}
+            canvasWidth={props.canvasWidth}
+            >
             {props.entryNames.map( (value: String, index: number) => {
                 return (
                     <li key={index}>

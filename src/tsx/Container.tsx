@@ -1,5 +1,5 @@
 import {useEffect, useRef, useState} from 'react'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 import AmidaBaseComponent from './parts/AmidaBase'
 import EntryNamesComponent from './parts/EntryNames'
 import ResultComponent from './parts/Result'

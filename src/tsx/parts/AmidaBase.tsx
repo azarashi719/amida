@@ -1,10 +1,9 @@
 import {useEffect, useRef} from 'react'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 
 const Canvas = styled.canvas`
 
 `
-
 
 type Props = {
     canvasWidth: number,

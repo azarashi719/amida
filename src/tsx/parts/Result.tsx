@@ -1,10 +1,10 @@
 import {useEffect, useRef} from 'react'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 
-// TODO: consoleのwarning出てる
 type WrapProps = {
     canvasWidth: number
 }
+
 const Wrap = styled.div<WrapProps>`
     position: relative;
     width: ${props => props.canvasWidth + 'px'};
@@ -14,6 +14,7 @@ type ImageBoxProps = {
     intervalWidth: number,
     leftPosition: number,
 }
+
 const ImageBox = styled.span<ImageBoxProps>`
     position: absolute;
     width: ${props => props.intervalWidth + 'px'};
@@ -33,11 +34,11 @@ type Props = {
 function ResultComponent(props: Props) {
     const atariNumber: number = Math.floor(Math.random() * props.lengthEntryNames);
 
-    const leftPosition: number = (props.intervalWidth * atariNumber) - (props.intervalWidth / 2);
+    const leftPosition: number = (props.intervalWidth * atariNumber) + (props.intervalWidth / 2);
 
     return (
         <Wrap canvasWidth={props.canvasWidth}>
-            <ImageBox 
+            <ImageBox
                 intervalWidth={props.intervalWidth}
                 leftPosition={leftPosition}
                 >
