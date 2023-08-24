@@ -10,7 +10,7 @@ const Container = styled.div`
 
 function ContainerComponent() {
     const canvasRef: any = useRef(null);
-    const [canvasContext, setCanvasContext] = useState<any>(null);
+    const [canvasContext, setCanvasContext] = useState<CanvasRenderingContext2D | null>(null);
     const numberOfTree: number = 15;
     const entryNames: Array<String> = ['a', 'b', 'c', 'd'];
     const lengthEntryNames: number = entryNames.length;

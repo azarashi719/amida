@@ -10,7 +10,7 @@ type Props = {
     canvasHeight: number,
     intervalWidth: number,
     intervalHeight: number,
-    canvasContext: any,
+    canvasContext: CanvasRenderingContext2D | null,
     setCanvasContext: Function,
     numberOfTree: number,
     canvasRef: any,
@@ -24,8 +24,8 @@ function AmidaBaseComponent(props: Props) {
      * 
      * @returns 
      */
-     const getCanvasContext = (): CanvasRenderingContext2D => {
-        const canvas: any = props.canvasRef.current;
+     const getCanvasContext = (): CanvasRenderingContext2D | null => {
+        const canvas: HTMLCanvasElement = props.canvasRef.current;
         return canvas.getContext("2d");
     }
 
@@ -42,7 +42,10 @@ function AmidaBaseComponent(props: Props) {
     }
     
     useEffect(() => {
-        const ctx: CanvasRenderingContext2D = getCanvasContext();
+        const ctx: CanvasRenderingContext2D | null = getCanvasContext();
+        if (!ctx || !(ctx instanceof CanvasRenderingContext2D)) {
+            throw new Error('Failed to get 2D context');
+        }
         ctx.clearRect(0, 0, props.canvasWidth, props.canvasHeight);
         ctx.strokeStyle = '#261103';
 
