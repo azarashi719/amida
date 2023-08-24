@@ -15,7 +15,7 @@ const EntryNames = styled.ul<EntryNamesProps>`
     position: relative;
     z-index: 100;
     > li {
-        width: 80px;
+        width: ${props => props.intervalWidth + 'px'};
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -40,7 +40,7 @@ type Props = {
     canvasContext: any,
     setCanvasContext: Function,
     numberOfTree: number,
-    amidaPath: [number, any],
+    amidaPath: number[][][],
     setAmidaPath: Function,
 }
 
