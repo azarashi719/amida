@@ -50,9 +50,7 @@ function AmidaBaseComponent(props: Props) {
 
         for (let y: number = 0; y < props.numberOfTree; y++) {
             branchingPoint = 0;
-            // console.log(props.amidaPath)
-            props.amidaPath[y] = [branchingPoint];
-            // console.log(props.amidaPath)
+            props.amidaPath[y] = new Array(branchingPoint);
             for (let x: number = 0; x < props.lengthEntryNames; x++){
                 const isLastCol = x === props.lengthEntryNames - 1;
                 const isLastRow = y === props.numberOfTree - 1;
@@ -93,7 +91,6 @@ function AmidaBaseComponent(props: Props) {
         }
         props.setCanvasContext(ctx);
         props.setAmidaPath(props.amidaPath);
-        console.log(props.amidaPath);
     });
 
     return (
