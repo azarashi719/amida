@@ -17,8 +17,8 @@ type ImageBoxProps = {
 
 const ImageBox = styled.span<ImageBoxProps>`
     position: absolute;
-    width: ${props => props.intervalWidth + 'px'};
-    left: ${props => props.leftPosition + 'px'};
+    width: ${ props => props.intervalWidth + 'px' };
+    left: ${ props => props.leftPosition + 'px' };
     img {
         width: 100%;
         height: auto;

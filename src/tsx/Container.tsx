@@ -1,8 +1,8 @@
 import {useEffect, useRef, useState} from 'react'
 import styled from '@emotion/styled'
-import AmidaBaseComponent from './parts/AmidaBase'
-import EntryNamesComponent from './parts/EntryNames'
-import ResultComponent from './parts/Result'
+import AmidaBaseComponent from './components/AmidaBase'
+import EntryNamesComponent from './components/EntryNames'
+import ResultComponent from './components/Result'
 
 const Container = styled.div`
     margin: 30px;
