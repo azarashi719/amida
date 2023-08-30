@@ -1,20 +1,16 @@
 import {useEffect, useRef} from 'react'
 import styled from '@emotion/styled'
+import {AmidaDrawing, AmidaSize} from '../types/amidaView'
 
 const Canvas = styled.canvas`
 
 `
 
 type Props = {
-    canvasWidth: number,
-    canvasHeight: number,
-    intervalWidth: number,
-    intervalHeight: number,
+    amidaSize: AmidaSize,
     canvasContext: CanvasRenderingContext2D | null,
     setCanvasContext: Function,
-    numberOfTree: number,
     canvasRef: any,
-    lengthEntryNames: number,
     amidaPath: number[][][],
     setAmidaPath: Function,
 }
@@ -46,17 +42,17 @@ function AmidaBaseComponent(props: Props) {
         if (!ctx || !(ctx instanceof CanvasRenderingContext2D)) {
             throw new Error('Failed to get 2D context');
         }
-        ctx.clearRect(0, 0, props.canvasWidth, props.canvasHeight);
+        ctx.clearRect(0, 0, props.amidaSize.canvasWidth, props.amidaSize.canvasHeight);
         ctx.strokeStyle = '#261103';
 
         let branchingPoint: number = 0;
 
-        for (let y: number = 0; y < props.numberOfTree; y++) {
+        for (let y: number = 0; y < props.amidaSize.numberOfTree; y++) {
             branchingPoint = 0;
             props.amidaPath[y] = new Array(branchingPoint);
-            for (let x: number = 0; x < props.lengthEntryNames; x++){
-                const isLastCol = x === props.lengthEntryNames - 1;
-                const isLastRow = y === props.numberOfTree - 1;
+            for (let x: number = 0; x < props.amidaSize.lengthEntryNames; x++){
+                const isLastCol = x === props.amidaSize.lengthEntryNames - 1;
+                const isLastRow = y === props.amidaSize.numberOfTree - 1;
                 const isNotBranching = getRandomNumberForBranching() === 0;
                 if (isLastCol || isLastRow || isNotBranching){
                     // 枝分かれ
@@ -65,9 +61,9 @@ function AmidaBaseComponent(props: Props) {
 
                     ctx.beginPath();
                     // 座標を取得
-                    ctx.moveTo(props.intervalWidth * getThisPoint(x), props.intervalHeight * getThisPoint(y));
+                    ctx.moveTo(props.amidaSize.intervalWidth * getThisPoint(x), props.amidaSize.intervalHeight * getThisPoint(y));
                     // 縦線を引く
-                    ctx.lineTo(props.intervalWidth * getThisPoint(x), props.intervalHeight * getNextPoint(y));
+                    ctx.lineTo(props.amidaSize.intervalWidth * getThisPoint(x), props.amidaSize.intervalHeight * getNextPoint(y));
                     ctx.stroke();
                 } else {
                     //隣の座標の分もセット
@@ -77,15 +73,15 @@ function AmidaBaseComponent(props: Props) {
                     }
                     ctx.beginPath();
                     // 座標を取得
-                    ctx.moveTo(props.intervalWidth * getThisPoint(x), props.intervalHeight * getThisPoint(y));
+                    ctx.moveTo(props.amidaSize.intervalWidth * getThisPoint(x), props.amidaSize.intervalHeight * getThisPoint(y));
                     // 縦線を引く
-                    ctx.lineTo(props.intervalWidth * getThisPoint(x), props.intervalHeight * getNextPoint(y));
+                    ctx.lineTo(props.amidaSize.intervalWidth * getThisPoint(x), props.amidaSize.intervalHeight * getNextPoint(y));
                     // 横線を引く
-                    ctx.lineTo(props.intervalWidth * getNextPoint(x), props.intervalHeight * getNextPoint(y));
+                    ctx.lineTo(props.amidaSize.intervalWidth * getNextPoint(x), props.amidaSize.intervalHeight * getNextPoint(y));
                     // 隣のx座標を取得
-                    ctx.moveTo(props.intervalWidth * getNextPoint(x), props.intervalHeight * getThisPoint(y));
+                    ctx.moveTo(props.amidaSize.intervalWidth * getNextPoint(x), props.amidaSize.intervalHeight * getThisPoint(y));
                     // 隣のx縦線を引く
-                    ctx.lineTo(props.intervalWidth * getNextPoint(x), props.intervalHeight * getNextPoint(y));
+                    ctx.lineTo(props.amidaSize.intervalWidth * getNextPoint(x), props.amidaSize.intervalHeight * getNextPoint(y));
                     ctx.stroke();
                     // 隣のx座標の縦線は書いたのでスキップ
                     x++;
@@ -97,7 +93,7 @@ function AmidaBaseComponent(props: Props) {
     });
 
     return (
-        <Canvas ref={props.canvasRef} width={props.canvasWidth} height={props.canvasHeight}>
+        <Canvas ref={props.canvasRef} width={props.amidaSize.canvasWidth} height={props.amidaSize.canvasHeight}>
             canvas not supported...
         </Canvas>
     )

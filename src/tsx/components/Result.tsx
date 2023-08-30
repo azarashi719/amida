@@ -1,5 +1,6 @@
 import {useEffect, useRef} from 'react'
 import styled from '@emotion/styled'
+import {AmidaDrawing, AmidaSize} from '../types/amidaView'
 
 type WrapProps = {
     canvasWidth: number
@@ -26,20 +27,18 @@ const ImageBox = styled.span<ImageBoxProps>`
 `
 
 type Props = {
-    canvasWidth: number,
-    intervalWidth: number,
-    lengthEntryNames: number,
+    amidaSize: AmidaSize,
 }
 
 function ResultComponent(props: Props) {
-    const atariNumber: number = Math.floor(Math.random() * props.lengthEntryNames);
+    const atariNumber: number = Math.floor(Math.random() * props.amidaSize.lengthEntryNames);
 
-    const leftPosition: number = (props.intervalWidth * atariNumber) + (props.intervalWidth / 2);
+    const leftPosition: number = (props.amidaSize.intervalWidth * atariNumber) + (props.amidaSize.intervalWidth / 2);
 
     return (
-        <Wrap canvasWidth={props.canvasWidth}>
+        <Wrap canvasWidth={props.amidaSize.canvasWidth}>
             <ImageBox
-                intervalWidth={props.intervalWidth}
+                intervalWidth={props.amidaSize.intervalWidth}
                 leftPosition={leftPosition}
                 >
                 <img src="/public/image/onepiece04_usopp_sogeking.png" />

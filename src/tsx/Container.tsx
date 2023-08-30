@@ -3,6 +3,7 @@ import styled from '@emotion/styled'
 import AmidaBaseComponent from './components/AmidaBase'
 import EntryNamesComponent from './components/EntryNames'
 import ResultComponent from './components/Result'
+import {AmidaDrawing, AmidaSize} from './types/amidaView'
 
 const Container = styled.div`
     margin: 30px;
@@ -11,18 +12,19 @@ const Container = styled.div`
 function ContainerComponent() {
     const canvasRef: any = useRef(null);
     const [canvasContext, setCanvasContext] = useState<CanvasRenderingContext2D | null>(null);
-    const numberOfTree: number = 15;
-    const entryNames: Array<String> = ['a', 'b', 'c', 'd'];
-    const lengthEntryNames: number = entryNames.length;
-    const intervalWidth: number = 100;
-    const intervalHeight: number = 30;
-    let canvasWidth: number = 0;
-    let canvasHeight: number = 0;
-    canvasHeight = (numberOfTree *  intervalHeight) + 40;
-    canvasWidth = (lengthEntryNames * intervalWidth) + intervalWidth;
-
     const [amidaPath, setAmidaPath] = useState<number[][][]>([]);
+    const entryNames: Array<String> = ['a', 'b', 'c', 'd'];
     
+    let amidaSize: AmidaSize = {
+        lengthEntryNames: entryNames.length,
+        numberOfTree: 15,
+        canvasWidth: 0,
+        canvasHeight: 0,
+        intervalWidth: 100,
+        intervalHeight: 30,
+    };
+    amidaSize.canvasHeight = (amidaSize.numberOfTree * amidaSize.intervalHeight) + 40;
+    amidaSize.canvasWidth = (amidaSize.lengthEntryNames * amidaSize.intervalWidth) + amidaSize.intervalWidth;
 
     useEffect(() => {
     });
@@ -30,36 +32,24 @@ function ContainerComponent() {
     return (
         <>
             <Container>
-                <EntryNamesComponent 
-                    canvasWidth={canvasWidth} 
-                    canvasHeight={canvasHeight}
-                    intervalWidth={intervalWidth}
-                    intervalHeight={intervalHeight}
+                <EntryNamesComponent
+                    amidaSize={amidaSize}
                     entryNames={entryNames}
-                    lengthEntryNames={lengthEntryNames}
                     canvasContext={canvasContext}
                     setCanvasContext={setCanvasContext}
-                    numberOfTree={numberOfTree}
                     amidaPath={amidaPath}
                     setAmidaPath={setAmidaPath}
                 />
                 <AmidaBaseComponent 
-                    canvasWidth={canvasWidth} 
-                    canvasHeight={canvasHeight}
-                    intervalWidth={intervalWidth}
-                    intervalHeight={intervalHeight}
-                    numberOfTree={numberOfTree}
+                    amidaSize={amidaSize}
                     canvasContext={canvasContext}
                     setCanvasContext={setCanvasContext} 
                     canvasRef={canvasRef}
-                    lengthEntryNames={lengthEntryNames}
                     amidaPath={amidaPath}
                     setAmidaPath={setAmidaPath}
                 />
                 <ResultComponent
-                    canvasWidth={canvasWidth}
-                    intervalWidth={intervalWidth}
-                    lengthEntryNames={lengthEntryNames}
+                    amidaSize={amidaSize}
                 />
             </Container>
         </>
