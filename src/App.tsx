@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import AmidaBaseComponent from './components/AmidaBase'
 import EntryNamesComponent from './components/EntryNames'
 import ResultComponent from './components/Result'
-import {AmidaDrawing, AmidaSize} from './types/amidaView'
+import {AmidaDrawing, AmidaSize} from './tsx/types/amidaView'
 
 const Container = styled.div`
     margin: 30px;
@@ -15,6 +15,7 @@ function ContainerComponent() {
     const [amidaPath, setAmidaPath] = useState<number[][][]>([]);
     const entryNames: Array<String> = ['a', 'b', 'c', 'd'];
     
+    
     let amidaSize: AmidaSize = {
         lengthEntryNames: entryNames.length,
         numberOfTree: 15,
@@ -25,6 +26,7 @@ function ContainerComponent() {
     };
     amidaSize.canvasHeight = (amidaSize.numberOfTree * amidaSize.intervalHeight) + 40;
     amidaSize.canvasWidth = (amidaSize.lengthEntryNames * amidaSize.intervalWidth) + amidaSize.intervalWidth;
+    const atariNumber: number = Math.floor(Math.random() * amidaSize.lengthEntryNames);
 
     useEffect(() => {
     });
@@ -50,6 +52,7 @@ function ContainerComponent() {
                 />
                 <ResultComponent
                     amidaSize={amidaSize}
+                    atariNumber={atariNumber}
                 />
             </Container>
         </>

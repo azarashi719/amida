@@ -1,6 +1,6 @@
 import {useEffect, useRef} from 'react'
 import styled from '@emotion/styled'
-import {AmidaDrawing, AmidaSize} from '../types/amidaView'
+import {AmidaDrawing, AmidaSize} from '../tsx/types/amidaView'
 
 type WrapProps = {
     canvasWidth: number
@@ -28,12 +28,11 @@ const ImageBox = styled.span<ImageBoxProps>`
 
 type Props = {
     amidaSize: AmidaSize,
+    atariNumber: number,
 }
 
 function ResultComponent(props: Props) {
-    const atariNumber: number = Math.floor(Math.random() * props.amidaSize.lengthEntryNames);
-
-    const leftPosition: number = (props.amidaSize.intervalWidth * atariNumber) + (props.amidaSize.intervalWidth / 2);
+    const leftPosition: number = (props.amidaSize.intervalWidth * props.atariNumber) + (props.amidaSize.intervalWidth / 2);
 
     return (
         <Wrap canvasWidth={props.amidaSize.canvasWidth}>
