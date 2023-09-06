@@ -1,6 +1,6 @@
 import {useEffect, useRef} from 'react'
 import styled from '@emotion/styled'
-import {AmidaDrawing, AmidaSize} from '../tsx/types/amidaView'
+import {AmidaDrawing, AmidaSize} from '../states/types/amidaView'
 
 type EntryNamesProps = {
     canvasWidth: number,

@@ -1,15 +1,22 @@
 import {useEffect, useRef, useState} from 'react'
 import styled from '@emotion/styled'
+import {useSelector, useDispatch} from 'react-redux'
+
 import AmidaBaseComponent from './components/AmidaBase'
 import EntryNamesComponent from './components/EntryNames'
 import ResultComponent from './components/Result'
-import {AmidaDrawing, AmidaSize} from './tsx/types/amidaView'
+import {AmidaDrawing, AmidaSize} from './states/types/amidaView'
+import {setCanvasHeight, setCanvasWidth, setLengthEntryNames} from './states/amidaSize/actions'
+import {getAmidaSizeLengthEntryNames, getAmidaSizeNumberOfTree, getAmidaSizeIntervalHeight, getAmidaSizeIntervalWidth, getAmidaSizeCanvasHeight} from './states/amidaSize/selectors'
+
 
 const Container = styled.div`
     margin: 30px;
 `;
 
 function ContainerComponent() {
+    const selector = useSelector(state => state.amidaSize);
+    const dispatch = useDispatch();
     const canvasRef: any = useRef(null);
     const [canvasContext, setCanvasContext] = useState<CanvasRenderingContext2D | null>(null);
     const [amidaPath, setAmidaPath] = useState<number[][][]>([]);
@@ -24,16 +31,23 @@ function ContainerComponent() {
         intervalWidth: 100,
         intervalHeight: 30,
     };
+
     amidaSize.canvasHeight = (amidaSize.numberOfTree * amidaSize.intervalHeight) + 40;
     amidaSize.canvasWidth = (amidaSize.lengthEntryNames * amidaSize.intervalWidth) + amidaSize.intervalWidth;
-    const atariNumber: number = Math.floor(Math.random() * amidaSize.lengthEntryNames);
+    const canvasHeight = getAmidaSizeNumberOfTree(selector) * getAmidaSizeIntervalHeight(selector) + 40;
+    
 
+    const atariNumber: number = Math.floor(Math.random() * amidaSize.lengthEntryNames);
+    
     useEffect(() => {
-    });
+        dispatch(setCanvasHeight(canvasHeight));
+        dispatch(setLengthEntryNames(entryNames.length));
+    }, []);
 
     return (
         <>
             <Container>
+                <p>{getAmidaSizeCanvasHeight(selector)}</p>
                 <EntryNamesComponent
                     amidaSize={amidaSize}
                     entryNames={entryNames}

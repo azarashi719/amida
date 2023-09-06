@@ -1,6 +1,10 @@
 import {useEffect, useRef} from 'react'
 import styled from '@emotion/styled'
-import {AmidaDrawing, AmidaSize} from '../tsx/types/amidaView'
+import { useDispatch, useSelector } from "react-redux";
+
+import {AmidaDrawing, AmidaSize} from '../states/types/amidaView'
+
+import {getAmidaSizeLengthEntryNames, getAmidaSizeNumberOfTree, getAmidaSizeIntervalHeight, getAmidaSizeIntervalWidth, getAmidaSizeCanvasHeight} from '../states/amidaSize/selectors'
 
 const Canvas = styled.canvas`
 
@@ -36,13 +40,14 @@ function AmidaBaseComponent(props: Props) {
     const getNextPoint = (point: number): number => {
         return point + 2;
     }
-    
+    const selector = useSelector(state => state.amidaSize);
+
     useEffect(() => {
         const ctx: CanvasRenderingContext2D | null = getCanvasContext();
         if (!ctx || !(ctx instanceof CanvasRenderingContext2D)) {
             throw new Error('Failed to get 2D context');
         }
-        ctx.clearRect(0, 0, props.amidaSize.canvasWidth, props.amidaSize.canvasHeight);
+        ctx.clearRect(0, 0, props.amidaSize.canvasWidth, getAmidaSizeCanvasHeight(selector));
         ctx.strokeStyle = '#261103';
 
         let branchingPoint: number = 0;
