@@ -25,17 +25,10 @@ function ContainerComponent() {
     
     let amidaSize: AmidaSize = {
         lengthEntryNames: entryNames.length,
-        numberOfTree: 15,
-        canvasWidth: 0,
-        canvasHeight: 0,
-        intervalWidth: 100,
-        intervalHeight: 30,
     };
 
-    amidaSize.canvasHeight = (amidaSize.numberOfTree * amidaSize.intervalHeight) + 40;
-    amidaSize.canvasWidth = (amidaSize.lengthEntryNames * amidaSize.intervalWidth) + amidaSize.intervalWidth;
     const canvasHeight = getAmidaSizeNumberOfTree(selector) * getAmidaSizeIntervalHeight(selector) + 40;
-    const canvasWidth = (4 * getAmidaSizeIntervalWidth(selector)) + getAmidaSizeIntervalWidth(selector);
+    const canvasWidth = (entryNames.length * getAmidaSizeIntervalWidth(selector)) + getAmidaSizeIntervalWidth(selector);
 
     const atariNumber: number = Math.floor(Math.random() * amidaSize.lengthEntryNames);
     

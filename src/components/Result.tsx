@@ -1,6 +1,9 @@
 import {useEffect, useRef} from 'react'
 import styled from '@emotion/styled'
 import {AmidaDrawing, AmidaSize} from '../states/types/amidaView'
+import { useDispatch, useSelector } from "react-redux";
+
+import {getAmidaSizeIntervalWidth, getAmidaSizeCanvasWidth} from '../states/amidaSize/selectors'
 
 type WrapProps = {
     canvasWidth: number
@@ -32,12 +35,13 @@ type Props = {
 }
 
 function ResultComponent(props: Props) {
-    const leftPosition: number = (props.amidaSize.intervalWidth * props.atariNumber) + (props.amidaSize.intervalWidth / 2);
+    const selector = useSelector(state => state.amidaSize);
+    const leftPosition: number = (getAmidaSizeIntervalWidth(selector) * props.atariNumber) + (getAmidaSizeIntervalWidth(selector) / 2);
 
     return (
-        <Wrap canvasWidth={props.amidaSize.canvasWidth}>
+        <Wrap canvasWidth={getAmidaSizeCanvasWidth(selector)}>
             <ImageBox
-                intervalWidth={props.amidaSize.intervalWidth}
+                intervalWidth={getAmidaSizeIntervalWidth(selector)}
                 leftPosition={leftPosition}
                 >
                 <img src="/public/image/onepiece04_usopp_sogeking.png" />
