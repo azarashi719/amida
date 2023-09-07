@@ -13,11 +13,3 @@ export const setCanvasWidth = (width: number) => {
         payload: width
     }
 }
-
-export const SET_LENGTH_ENTRY_NAMES = "SET_LENGTH_ENTRY_NAMES";
-export const setLengthEntryNames = (length: number) => {
-    return {
-        type: SET_LENGTH_ENTRY_NAMES,
-        payload: length
-    }
-}

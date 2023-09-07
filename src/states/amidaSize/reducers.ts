@@ -14,11 +14,6 @@ export const AmidaSizeReducer = (state: any = initialState.amidaSize, action: an
                 ...state,
                 canvasWidth: action.payload
             };
-        case Actions.SET_LENGTH_ENTRY_NAMES:
-            return {
-                ...state,
-                lengthEntryNames: action.payload
-            };
         default:
             return state
             
