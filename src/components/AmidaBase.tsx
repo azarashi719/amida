@@ -1,17 +1,16 @@
-import {useEffect, useRef} from 'react'
+import {useEffect, useRef, useLayoutEffect} from 'react'
 import styled from '@emotion/styled'
 import { useDispatch, useSelector } from "react-redux";
 
-import {AmidaDrawing, AmidaSize} from '../states/types/amidaView'
-
-import {getAmidaSizeNumberOfTree, getAmidaSizeIntervalHeight, getAmidaSizeIntervalWidth, getAmidaSizeCanvasHeight, getAmidaSizeCanvasWidth} from '../states/amidaSize/selectors'
+import {setCanvasHeight, setCanvasWidth, setLengthEntryNames} from '../states/amidaSize/actions'
+import {getAmidaSizeNumberOfTree, getAmidaSizeIntervalHeight, getAmidaSizeIntervalWidth, getAmidaSizeCanvasHeight, getAmidaSizeCanvasWidth, getAmidaSizeLengthEntryNames} from '../states/amidaSize/selectors'
 
 const Canvas = styled.canvas`
 
 `
 
 type Props = {
-    amidaSize: AmidaSize,
+    entryNames: String[],
     canvasContext: CanvasRenderingContext2D | null,
     setCanvasContext: Function,
     canvasRef: any,
@@ -40,12 +39,20 @@ function AmidaBaseComponent(props: Props) {
     const getNextPoint = (point: number): number => {
         return point + 2;
     }
-    const selector = useSelector(state => state.amidaSize);
+    const selector = useSelector(state => state);
+    const dispatch = useDispatch();
     const intervalWidth = getAmidaSizeIntervalWidth(selector);
     const intervalHeight = getAmidaSizeIntervalHeight(selector);
     const numberOfTree = getAmidaSizeNumberOfTree(selector);
+    const lengthEntryNames = props.entryNames.length;
+
+    // MEMO: 値の更新がうまくいっていない
+    // useLayoutEffect(() => {
+    //     dispatch(setLengthEntryNames(props.entryNames.length));
+    // }, []);
 
     useEffect(() => {
+        
         const ctx: CanvasRenderingContext2D | null = getCanvasContext();
         if (!ctx || !(ctx instanceof CanvasRenderingContext2D)) {
             throw new Error('Failed to get 2D context');
@@ -58,8 +65,8 @@ function AmidaBaseComponent(props: Props) {
         for (let y: number = 0; y < numberOfTree; y++) {
             branchingPoint = 0;
             props.amidaPath[y] = new Array(branchingPoint);
-            for (let x: number = 0; x < props.amidaSize.lengthEntryNames; x++){
-                const isLastCol = x === props.amidaSize.lengthEntryNames - 1;
+            for (let x: number = 0; x < lengthEntryNames; x++){
+                const isLastCol = x === lengthEntryNames - 1;
                 const isLastRow = y === numberOfTree - 1;
                 const isNotBranching = getRandomNumberForBranching() === 0;
                 if (isLastCol || isLastRow || isNotBranching){

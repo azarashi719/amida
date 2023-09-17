@@ -1,6 +1,5 @@
 import {useEffect, useRef} from 'react'
 import styled from '@emotion/styled'
-import {AmidaDrawing, AmidaSize} from '../states/types/amidaView'
 import { useDispatch, useSelector } from "react-redux";
 
 import {getAmidaSizeNumberOfTree, getAmidaSizeIntervalHeight, getAmidaSizeIntervalWidth, getAmidaSizeCanvasHeight, getAmidaSizeCanvasWidth} from '../states/amidaSize/selectors'
@@ -35,7 +34,6 @@ const Button = styled.button`
     
 `
 type Props = {
-    amidaSize: AmidaSize,
     entryNames: Array<String>,
     canvasContext: any,
     setCanvasContext: Function,
@@ -68,7 +66,7 @@ function EntryNamesComponent(props: Props){
         return props.amidaPath[y][x][1] === getThisPoint(x);
     }
 
-    const selector = useSelector(state => state.amidaSize);
+    const selector = useSelector(state => state);
     const intervalWidth = getAmidaSizeIntervalWidth(selector);
     const intervalHeight = getAmidaSizeIntervalHeight(selector);
 

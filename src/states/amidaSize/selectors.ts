@@ -1,6 +1,11 @@
 import { createSelector } from "reselect";
 
-const amidaSizeSelector = (state: any) => state;
+const amidaSizeSelector = (state: any) => state.amidaSize;
+
+export const getAmidaSizeLengthEntryNames = createSelector(
+    [amidaSizeSelector],
+    state => state.lengthEntryNames
+);
 
 export const getAmidaSizeNumberOfTree = createSelector(
     [amidaSizeSelector],

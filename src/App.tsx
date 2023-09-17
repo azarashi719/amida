@@ -6,8 +6,8 @@ import AmidaBaseComponent from './components/AmidaBase'
 import EntryNamesComponent from './components/EntryNames'
 import ResultComponent from './components/Result'
 import {AmidaDrawing, AmidaSize} from './states/types/amidaView'
-import {setCanvasHeight, setCanvasWidth} from './states/amidaSize/actions'
-import {getAmidaSizeIntervalHeight, getAmidaSizeIntervalWidth, getAmidaSizeCanvasHeight, getAmidaSizeNumberOfTree} from './states/amidaSize/selectors'
+import {setCanvasHeight, setCanvasWidth, setLengthEntryNames} from './states/amidaSize/actions'
+import {getAmidaSizeIntervalHeight, getAmidaSizeIntervalWidth, getAmidaSizeCanvasHeight, getAmidaSizeNumberOfTree, getAmidaSizeLengthEntryNames} from './states/amidaSize/selectors'
 
 
 const Container = styled.div`
@@ -15,14 +15,13 @@ const Container = styled.div`
 `;
 
 function ContainerComponent() {
-    const selector = useSelector(state => state.amidaSize);
+    const selector = useSelector(state => state);
     const dispatch = useDispatch();
     const canvasRef: any = useRef(null);
     const [canvasContext, setCanvasContext] = useState<CanvasRenderingContext2D | null>(null);
     const [amidaPath, setAmidaPath] = useState<number[][][]>([]);
     const entryNames: Array<String> = ['a', 'b', 'c', 'd'];
-    
-    
+
     let amidaSize: AmidaSize = {
         lengthEntryNames: entryNames.length,
     };
@@ -42,15 +41,14 @@ function ContainerComponent() {
             <Container>
                 <p>{getAmidaSizeCanvasHeight(selector)}</p>
                 <EntryNamesComponent
-                    amidaSize={amidaSize}
                     entryNames={entryNames}
                     canvasContext={canvasContext}
                     setCanvasContext={setCanvasContext}
                     amidaPath={amidaPath}
                     setAmidaPath={setAmidaPath}
                 />
-                <AmidaBaseComponent 
-                    amidaSize={amidaSize}
+                <AmidaBaseComponent
+                    entryNames={entryNames}
                     canvasContext={canvasContext}
                     setCanvasContext={setCanvasContext} 
                     canvasRef={canvasRef}

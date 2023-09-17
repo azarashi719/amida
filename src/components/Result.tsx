@@ -35,7 +35,7 @@ type Props = {
 }
 
 function ResultComponent(props: Props) {
-    const selector = useSelector(state => state.amidaSize);
+    const selector = useSelector(state => state);
     const leftPosition: number = (getAmidaSizeIntervalWidth(selector) * props.atariNumber) + (getAmidaSizeIntervalWidth(selector) / 2);
 
     return (

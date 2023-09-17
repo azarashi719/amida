@@ -13,3 +13,12 @@ export const setCanvasWidth = (width: number) => {
         payload: width
     }
 }
+
+// MEMO: 値の更新がうまくいっていない
+export const SET_LENGTH_ENTRY_NAMES = "SET_CANVAS_WIDTH";
+export const setLengthEntryNames = (length: number) => {
+    return {
+        type: SET_LENGTH_ENTRY_NAMES,
+        payload: length
+    }
+}
